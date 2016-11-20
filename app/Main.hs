@@ -12,6 +12,12 @@ import qualified Text.Blaze.Svg11.Attributes as A
 import Convert
 import Shapes
 
+--Links
+--https://sarasoueidan.com/blog/svg-coordinate-systems/
+--https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes
+--https://developer.mozilla.org/en/docs/Web/SVG/Attribute/transform
+--http://stackoverflow.com/questions/19484707/how-can-i-make-an-svg-scale-with-its-parent-container
+
 --Example
 --[(scale (point 0.5 0.5) <+> translate (point 1.2 0.4), square)]
 --
