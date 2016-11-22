@@ -10,7 +10,7 @@ module Shapes(
 -- Utilities
 
 data Vector = Vector Double Double
-              deriving Show
+              deriving (Read, Show)
 vector = Vector
 
 cross :: Vector -> Vector -> Double
@@ -25,7 +25,7 @@ invert (Matrix (Vector a b) (Vector c d)) = matrix (d / k) (-b / k) (-c / k) (a 
 
 -- 2x2 square matrices are all we need.
 data Matrix = Matrix Vector Vector
-              deriving Show
+              deriving (Read, Show)
 
 matrix :: Double -> Double -> Double -> Double -> Matrix
 matrix a b c d = Matrix (Vector a b) (Vector c d)
@@ -44,7 +44,7 @@ point = vector
 data Shape = Empty
            | Circle
            | Square
-             deriving Show
+             deriving (Read, Show)
 
 empty, circle, square :: Shape
 
@@ -59,7 +59,7 @@ data Transform = Identity
            | Scale Vector
            | Compose Transform Transform
            | Rotate Matrix
-             deriving Show
+             deriving (Read, Show)
 
 identity = Identity
 translate = Translate
@@ -100,43 +100,9 @@ instance Show Colour where
 
 -- FillColour, StrokeColour, StrokeWidth
 data Style = Style Colour Colour Double
-  deriving (Show, Read)
+  deriving (Read, Show)
 
 style = Style
 -- Drawings
 
-type Drawing = [(Transform,Shape,Style)]
-
-
--- interpretation function for drawings
-
--- inside :: Point -> Drawing -> Bool
--- inside p d = or $ map (inside1 p) d
---
--- inside1 :: Point -> (Transform, Shape) -> Bool
--- inside1 p (t,s) = insides (transform t p) s
---
--- insides :: Point -> Shape -> Bool
--- p `insides` Empty = False
--- p `insides` Circle = distance p <= 1
--- p `insides` Square = maxnorm  p <= 1
---
--- borders :: Point -> Drawing -> Bool
--- borders p d = or $ map (borders1 p) d
---
--- borders1 :: Point -> (Transform, Shape) -> Bool
--- borders1 p (t,s) = _borders (transform t p) s
---
--- _borders :: Point -> Shape -> Bool
--- p `_borders` Empty = False
--- p `_borders` Circle = distance p > 1 && distance p < 1.1
--- p `_borders` Square = maxnorm p > 1 && maxnorm p < 1.1
---
---
--- distance :: Point -> Double
--- distance (Vector x y ) = sqrt ( x**2 + y**2 )
---
--- maxnorm :: Point -> Double
--- maxnorm (Vector x y ) = max (abs x) (abs y)
---
--- testShape = (scale (point 10 10), circle)
+type Drawing = [(Transform, Shape, Style)]

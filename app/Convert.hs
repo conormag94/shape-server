@@ -15,7 +15,7 @@ import qualified Text.Blaze.Svg as Z
 
 
 convert :: Drawing -> S.Svg
-convert x = S.svg ! A.version "1.1" ! A.width "800" ! A.height "800" $ do
+convert x = S.svg ! A.version "1.1" ! A.width "400" ! A.height "400" $ do
     convertShapes x
 
 convertShapes :: Drawing -> S.Svg
@@ -24,10 +24,10 @@ convertShapes (x:xs) = parseShape x >> convertShapes xs
 
 -- Without the non-scaling-stroke atrribute, the stroke takes up the whole Shape
 parseShape :: (Transform, Shape, Style) -> S.Svg
-parseShape (tr, Square, st) = applyAttributes (S.rect ! A.x "0" ! A.y "0" ! A.width "1" ! A.height "1" !
-  H.customAttribute "vector-effect" "non-scaling-stroke") (st, tr)
-parseShape (tr, Circle, st) = applyAttributes (S.circle ! A.cx "0" ! A.cy "0" ! A.r "1" ! 
-  H.customAttribute "vector-effect" "non-scaling-stroke") (st, tr)
+parseShape (tr, Square, st) = applyAttributes S.rect (st, tr) ! A.x "1" ! A.y "1" ! A.width "1" ! A.height "1" !
+  H.customAttribute "vector-effect" "non-scaling-stroke"
+parseShape (tr, Circle, st) = applyAttributes S.circle (st, tr) ! A.cx "30" ! A.cy "30" ! A.r "1" !
+  H.customAttribute "vector-effect" "non-scaling-stroke"
 
 applyAttributes :: S.Svg -> (Style, Transform) -> S.Svg
 applyAttributes svg (st, tr) = applyStyle (applyTransform svg tr) st
